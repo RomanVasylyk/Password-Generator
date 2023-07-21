@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Password Generator</title>
+<style>
+    body {
+  font-family: Arial, sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #4caf50;
+}
+
+.options {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="number"] {
+  width: 40px;
+}
+
+button {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.result {
+  display: flex;
+  align-items: center;
+}
+
+.result label {
+  margin-right: 10px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.input-group label {
+  margin-right: 5px;
+}
+
+.input-group input {
+  margin-right: 10px;
+}
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Password Generator</h1>
+        <div class="options">
+          <label for="length">Length:</label>
+          <input type="number" id="length" value="12">
+          <label for="includeDigits">Include Digits:</label>
+          <input type="checkbox" id="includeDigits" checked>
+          <label for="includeLowercase">Include Lowercase Letters:</label>
+          <input type="checkbox" id="includeLowercase" checked>
+          <label for="includeUppercase">Include Uppercase Letters:</label>
+          <input type="checkbox" id="includeUppercase" checked>
+          <label for="includeSpecialChars">Include Special Characters:</label>
+          <input type="checkbox" id="includeSpecialChars" checked>
+          <label for="excludeSimilarChars">Exclude Similar Characters (e.g., i, l, 1, L, o, 0, O):</label>
+          <input type="checkbox" id="excludeSimilarChars" checked>
+          <button onclick="generatePassword()">Generate Password</button>
+        </div>
+        <div class="result">
+          <label for="result">Generated Password:</label>
+          <input type="text" id="result" readonly>
+        </div>
+      </div>
+
+  <script>
+    function generatePassword() {
+  var length = document.getElementById("length").value;
+  var includeDigits = document.getElementById("includeDigits").checked;
+  var includeLowercase = document.getElementById("includeLowercase").checked;
+  var includeUppercase = document.getElementById("includeUppercase").checked;
+  var includeSpecialChars = document.getElementById("includeSpecialChars").checked;
+  var excludeSimilarChars = document.getElementById("excludeSimilarChars").checked;
+
+  var charset = "";
+  if (includeDigits) charset += "0123456789";
+  if (includeLowercase) charset += "abcdefghijklmnopqrstuvwxyz";
+  if (includeUppercase) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  if (includeSpecialChars) charset += "!@#$%^&*()_-+=";
+
+  if (excludeSimilarChars) {
+    charset = charset.replace(/[il1Lo0O]/g, "");
+  }
+
+  var password = "";
+  for (var i = 0; i < length; i++) {
+    var randomIndex = Math.floor(Math.random() * charset.length);
+    password += charset[randomIndex];
+  }
+
+  document.getElementById("result").value = password;
+}
+
+  </script>
+</body>
+</html>
